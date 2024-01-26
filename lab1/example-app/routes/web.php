@@ -84,25 +84,27 @@ Route::get('myform', function(){
     return view('myform');
 });
 
-Route::post('myform', array('before' => 'csrf', function()
-    {
-        $rules = array(
-            'email'    => 'required|email|min:6',
-            'username' => 'required|min:6',
-            'password' => 'required'
-);
-        $messages = array(
-            'min' => 'Way too short! The :attribute must be at
-                least :min characters in length.',
-            'username.required' => 'We really, really need a
-Username.'
-);
-        $validation = Validator::make(Input::all(), $rules,
-            $messages);
-        if ($validation->fails())
-        {
-            return Redirect::to('myform')->withErrors
-                ($validation)->withInput();
-}
-        return Redirect::to('myresults')->withInput();
-    }));
+Route::post('myform', ['before' => 'csrf', function () {
+    $rules = [
+        'email' => 'required|email|min:6',
+        'username' => 'required|min:6',
+        'password' => 'required',
+    ];
+
+    $messages = [
+        'min' => 'Way too short! The :attribute must be at least :min characters in length.',
+        'username.required' => 'We really, really need a Username.',
+    ];
+
+    $validation = validator(request()->all(), $rules, $messages);
+
+    if ($validation->fails()) {
+        return Redirect::to('myform')->withErrors($validation)->withInput();
+    }
+
+    return Redirect::to('myresults')->withInput();
+}]);
+
+Route::get('myresults', function() {
+    return dd(old());
+});
