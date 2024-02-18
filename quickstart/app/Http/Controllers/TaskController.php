@@ -42,4 +42,16 @@ class TaskController extends Controller
             'tasks' => $this->tasks->forUser($request->user()),
         ]);
     }
+
+    /**
+     * Destroy the given task.
+     *
+     * @param  Request  $request
+     * @param  string  $taskId
+     * @return Response
+     */
+    public function destroy(Request $request, $taskId)
+    {
+        //
+    }
 }
